@@ -9,6 +9,8 @@ authors = [
 requires-python = ">=3.14"
 dependencies = [
     "inquirer>=3.4.1",
+    "ollama>=0.6.1",
+    "python-dotenv>=1.2.1",
     "rich>=14.2.0",
     "youtube-transcript-api>=1.2.3",
     "yt-dlp>=2025.12.8",
