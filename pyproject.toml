@@ -1,12 +1,32 @@
 [project]
 name = "playlist-summarizer"
 version = "0.1.0"
-description = "Add your description here"
+description = "A CLI tool for fetching YouTube playlist transcripts and generating AI-powered summaries using Ollama"
 readme = "README.md"
 authors = [
     { name = "Anthony Kovach", email = "aj@ajxd2.dev" }
 ]
 requires-python = ">=3.14"
+keywords = [
+    "youtube",
+    "playlist",
+    "transcript",
+    "summarizer",
+    "ai",
+    "ollama",
+    "llm",
+    "cli",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Text Processing :: Markup",
+    "Topic :: Utilities",
+]
 dependencies = [
     "inquirer>=3.4.1",
     "ollama>=0.6.1",
