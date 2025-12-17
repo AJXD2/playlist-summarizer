@@ -22,7 +22,7 @@ A Python CLI tool that fetches YouTube playlist transcripts and generates AI-pow
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/playlist-summarizer.git
+git clone https://github.com/ajxd2/playlist-summarizer.git
 cd playlist-summarizer
 ```
 
