@@ -6,6 +6,9 @@ from rich.console import Console
 from playlist_summarizer_core import get_playlist_videos, get_transcript, Summarizer
 import inquirer
 import dotenv
+
+from time import sleep
+from time import time
 dotenv.load_dotenv()
 
 console = Console()
