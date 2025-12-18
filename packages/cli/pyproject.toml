@@ -1,0 +1,46 @@
+[project]
+name = "playlist-summarizer-cli"
+version = "0.1.0"
+description = "CLI tool for fetching YouTube playlist transcripts and generating AI-powered summaries"
+readme = "README.md"
+authors = [
+    { name = "Anthony Kovach", email = "aj@ajxd2.dev" }
+]
+requires-python = ">=3.14"
+keywords = [
+    "youtube",
+    "playlist",
+    "transcript",
+    "summarizer",
+    "ai",
+    "ollama",
+    "llm",
+    "cli",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Text Processing :: Markup",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "playlist-summarizer-core",
+    "inquirer>=3.4.1",
+    "python-dotenv>=1.2.1",
+    "rich>=14.2.0",
+]
+
+[project.scripts]
+playlist-summarizer = "playlist_summarizer_cli:main"
+
+[tool.uv.sources]
+playlist-summarizer-core = { workspace = true }
+
+[build-system]
+requires = ["uv_build>=0.9.17,<0.10.0"]
+build-backend = "uv_build"
+

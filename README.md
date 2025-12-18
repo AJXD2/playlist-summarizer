@@ -1,6 +1,13 @@
 # Playlist Summarizer
 
-A Python CLI tool that fetches YouTube playlist transcripts and generates AI-powered summaries using local or cloud-based LLM models via Ollama.
+A monorepo containing tools for fetching YouTube playlist transcripts and generating AI-powered summaries using local or cloud-based LLM models via Ollama.
+
+## Packages
+
+| Package | Description |
+|---------|-------------|
+| [`playlist-summarizer-core`](./packages/core) | Core library for transcript fetching and AI summarization |
+| [`playlist-summarizer-cli`](./packages/cli) | Command-line interface for the summarizer |
 
 ## Features
 
@@ -18,7 +25,7 @@ A Python CLI tool that fetches YouTube playlist transcripts and generates AI-pow
 - [Ollama](https://ollama.com/) installed and running (for local models)
 - Or Ollama Cloud API key (for cloud models)
 
-## Installation
+## Quick Start
 
 1. Clone the repository:
 ```bash
@@ -39,27 +46,56 @@ cp .env.example .env
 # OLLAMA_API_KEY=your_api_key_here     # Required for cloud models
 ```
 
-## Usage
-
-Run the application:
+4. Run the CLI:
 ```bash
 uv run playlist-summarizer
 ```
 
-Or activate the virtual environment and run:
-```bash
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-playlist-summarizer
+## Project Structure
+
+```
+playlist-summarizer/
+├── packages/
+│   ├── core/                    # Core library
+│   │   ├── src/
+│   │   │   └── playlist_summarizer_core/
+│   │   │       ├── __init__.py
+│   │   │       ├── fetcher.py   # YouTube transcript fetching
+│   │   │       └── summarizer.py # AI summarization logic
+│   │   ├── pyproject.toml
+│   │   └── README.md
+│   └── cli/                     # CLI application
+│       ├── src/
+│       │   └── playlist_summarizer_cli/
+│       │       ├── __init__.py
+│       │       ├── __main__.py
+│       │       └── main.py      # CLI entry point
+│       ├── pyproject.toml
+│       └── README.md
+├── transcripts/                 # Downloaded transcripts (gitignored)
+├── summaries/                   # Generated summaries (gitignored)
+├── pyproject.toml               # Workspace configuration
+├── uv.lock                      # Dependency lock file
+└── README.md
 ```
 
-### Fetch Playlist Transcripts
+## Usage
+
+### Using the CLI
+
+Run the CLI application:
+```bash
+uv run playlist-summarizer
+```
+
+#### Fetch Playlist Transcripts
 
 1. Select "Fetch playlist" from the main menu
 2. Enter the YouTube playlist URL
 3. Specify the output directory (defaults to `transcripts/{playlist_id}/`)
 4. Transcripts will be saved as `.txt` files
 
-### Summarize Playlists
+#### Summarize Playlists
 
 1. Select "Summarize playlist" from the main menu
 2. Enter the directory path containing transcripts (defaults to `transcripts/`)
@@ -69,23 +105,20 @@ playlist-summarizer
 6. Choose which videos to summarize (use space to select/deselect)
 7. Optionally create a master summary of all video summaries
 
+### Using the Core Library
 
-## Project Structure
+```python
+from playlist_summarizer_core import get_playlist_videos, get_transcript, Summarizer
 
-```
-playlist-summarizer/
-├── src/
-│   └── playlist_summarizer/
-│       ├── __init__.py
-│       ├── __main__.py
-│       ├── main.py          # CLI entry point
-│       ├── fetcher.py        # YouTube transcript fetching
-│       └── summarizer.py    # AI summarization logic
-├── transcripts/             # Downloaded transcripts (gitignored)
-├── summaries/              # Generated summaries (gitignored)
-├── pyproject.toml          # Project configuration
-├── uv.lock                 # Dependency lock file
-└── README.md
+# Fetch transcripts
+videos = get_playlist_videos("https://www.youtube.com/playlist?list=...")
+for video in videos:
+    transcript = get_transcript(video)
+    print(f"{video.title}: {len(transcript)} characters")
+
+# Summarize content
+summarizer = Summarizer(model="gemma3:4b")
+summary = summarizer.summarize("Your transcript text...")
 ```
 
 ## Configuration
@@ -111,7 +144,23 @@ uv sync
 ### Run from Source
 
 ```bash
-uv run python -m playlist_summarizer
+# Run CLI
+uv run playlist-summarizer
+
+# Or run as module
+uv run python -m playlist_summarizer_cli
+```
+
+### Working with Individual Packages
+
+```bash
+# Work on core package
+cd packages/core
+uv sync
+
+# Work on CLI package
+cd packages/cli
+uv sync
 ```
 
 ## License
@@ -120,9 +169,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome! Please feel free to submit a Pull Request. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## Author
 
 Anthony Kovach - [aj@ajxd2.dev](mailto:aj@ajxd2.dev)
-

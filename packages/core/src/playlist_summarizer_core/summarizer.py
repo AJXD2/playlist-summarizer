@@ -94,3 +94,4 @@ class Summarizer:
                     f.write(summary)
                 summaries.append(summary)
         return summaries
+

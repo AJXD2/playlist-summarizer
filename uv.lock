@@ -2,6 +2,13 @@ version = 1
 revision = 3
 requires-python = ">=3.14"
 
+[manifest]
+members = [
+    "playlist-summarizer",
+    "playlist-summarizer-cli",
+    "playlist-summarizer-core",
+]
+
 [[package]]
 name = "annotated-types"
 version = "0.7.0"
@@ -210,22 +217,42 @@ wheels = [
 [[package]]
 name = "playlist-summarizer"
 version = "0.1.0"
-source = { editable = "." }
+source = { virtual = "." }
+
+[[package]]
+name = "playlist-summarizer-cli"
+version = "0.1.0"
+source = { editable = "packages/cli" }
 dependencies = [
     { name = "inquirer" },
-    { name = "ollama" },
+    { name = "playlist-summarizer-core" },
     { name = "python-dotenv" },
     { name = "rich" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "inquirer", specifier = ">=3.4.1" },
+    { name = "playlist-summarizer-core", editable = "packages/core" },
+    { name = "python-dotenv", specifier = ">=1.2.1" },
+    { name = "rich", specifier = ">=14.2.0" },
+]
+
+[[package]]
+name = "playlist-summarizer-core"
+version = "0.1.0"
+source = { editable = "packages/core" }
+dependencies = [
+    { name = "ollama" },
+    { name = "python-dotenv" },
     { name = "youtube-transcript-api" },
     { name = "yt-dlp" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "inquirer", specifier = ">=3.4.1" },
     { name = "ollama", specifier = ">=0.6.1" },
     { name = "python-dotenv", specifier = ">=1.2.1" },
-    { name = "rich", specifier = ">=14.2.0" },
     { name = "youtube-transcript-api", specifier = ">=1.2.3" },
     { name = "yt-dlp", specifier = ">=2025.12.8" },
 ]

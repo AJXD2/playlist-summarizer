@@ -4,9 +4,8 @@ import rich
 import rich.progress
 import rich.status
 from rich.console import Console
-from .fetcher import get_playlist_videos, get_transcript
+from playlist_summarizer_core import get_playlist_videos, get_transcript, Summarizer
 import inquirer
-from .summarizer import Summarizer
 import dotenv
 dotenv.load_dotenv()
 
@@ -175,3 +174,4 @@ def main() -> None:
     
 if __name__ == "__main__":
     main()
+
