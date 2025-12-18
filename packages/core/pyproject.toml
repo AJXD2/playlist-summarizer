@@ -1,0 +1,39 @@
+[project]
+name = "playlist-summarizer-core"
+version = "0.1.0"
+description = "Core logic for YouTube playlist transcript fetching and AI-powered summarization"
+readme = "README.md"
+authors = [
+    { name = "Anthony Kovach", email = "aj@ajxd2.dev" }
+]
+requires-python = ">=3.14"
+keywords = [
+    "youtube",
+    "playlist",
+    "transcript",
+    "summarizer",
+    "ai",
+    "ollama",
+    "llm",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Text Processing :: Markup",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "ollama>=0.6.1",
+    "python-dotenv>=1.2.1",
+    "youtube-transcript-api>=1.2.3",
+    "yt-dlp>=2025.12.8",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.17,<0.10.0"]
+build-backend = "uv_build"
+
