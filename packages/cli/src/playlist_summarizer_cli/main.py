@@ -13,6 +13,52 @@ dotenv.load_dotenv()
 console = Console()
 
 
+def sanitize_filename(filename: str) -> str:
+    """
+    Sanitize a filename by removing or replacing filesystem-unfriendly characters.
+
+    Args:
+        filename: The original filename string
+
+    Returns:
+        A sanitized filename safe for use in filesystem operations
+    """
+    # Characters that are invalid on Windows: < > : " / \ | ? *
+    # Replace some with safe alternatives for readability
+    replacements = {
+        ":": "-",
+        "|": "-",
+        "/": "-",
+        "\\": "-",
+    }
+
+    # Remove characters that can't be safely replaced
+    invalid_chars = ["<", ">", '"', "?", "*"]
+
+    sanitized = filename
+    # Apply replacements
+    for old_char, new_char in replacements.items():
+        sanitized = sanitized.replace(old_char, new_char)
+
+    # Remove invalid characters
+    for char in invalid_chars:
+        sanitized = sanitized.replace(char, "")
+
+    # Strip leading/trailing spaces and dots (Windows doesn't allow these)
+    sanitized = sanitized.strip(" .")
+
+    # Limit filename length to ~200 characters (leaving room for extensions)
+    max_length = 200
+    if len(sanitized) > max_length:
+        sanitized = sanitized[:max_length]
+
+    # Handle empty filename edge case
+    if not sanitized:
+        sanitized = "untitled"
+
+    return sanitized
+
+
 def fetch_playlist() -> None:
     questions = [
         inquirer.Text("playlist_url", message="Enter the playlist URL"),
@@ -30,11 +76,12 @@ def fetch_playlist() -> None:
     videos = get_playlist_videos(playlist_url)
     for video in videos:
         transcript = get_transcript(video)
-        with open(os.path.join(output_dir, f"{video.title} ({video.url}).txt"), "w") as f:
+        sanitized_title = sanitize_filename(video.title)
+        filename = f"{sanitized_title} ({video.url}).txt"
+        filepath = os.path.join(output_dir, filename)
+        with open(filepath, "w") as f:
             f.write(transcript)
-        print(
-            f"Transcript for {video.title} saved to {os.path.join(output_dir, f'{video.title} ({video.url}).txt')}"
-        )
+        print(f"Transcript for {video.title} saved to {filepath}")
 
 
 def summarize_playlist() -> None:
